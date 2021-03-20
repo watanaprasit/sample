@@ -26,18 +26,14 @@ router.post("/:id/add", async(req,res) => {
 })
 
 
-//it will instead edit the entire foodlist instead of one
+//target the specific foodlist id instead of using the restaurant id itself
 router.put("/:id/edit", async(req,res)=> {
     try{
-        // let target = await Owner.findById(req.params.id)
-        // let index = await target.foodlist.findIndex(el => el._id == req.body._id)
-        // let {name, description, price} = req.body
-        // let res = await target.foodlist[index].replaceOne({name, description, price})
-        await Owner.findOneAndUpdate({"_id": req.params.id}, {
+        await Owner.findOneAndUpdate({"foodlist._id": req.params.id}, {
             $set: {
-                "restaurant.foodlist.$.name": req.body.name,
-                "restaurant.foodlist.$.description": req.body.description,
-                "restaurant.foodlist.$.price": req.body.price,
+                "foodlist.$.name": req.body.name,
+                "foodlist.$.description": req.body.description,
+                "foodlist.$.price": req.body.price,
             }
         })
 
