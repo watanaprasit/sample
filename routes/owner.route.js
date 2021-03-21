@@ -44,20 +44,15 @@ router.put("/:id/edit", async(req,res)=> {
 })
 
 
-router.delete("/:id/delete", async(req,res) => {
-    //how to get the foodID
-    // const foodid = "6055d442c61b8911422fa2cb"
-    //
-    // try{
-    //
-    //     await Owner.findByIdAndUpdate(req.params.id, {
-    //         $pull: {
-    //             foodlist : {_id : `${foodid}`}
-    //         }
-    //     }, {new: true})
-        try{
-            await Owner.findOneAndDelete({"foodlist._id": req.params.id})
+router.delete("/:id/:foodid/delete", async(req,res) => {
 
+    try{
+
+        await Owner.findByIdAndUpdate(req.params.id, {
+            $pull: {
+                foodlist : {_id : req.params.foodid }
+            }
+        }, {new: true})
 
         return res.status(200).json({message: "menu item deleted"})
 
